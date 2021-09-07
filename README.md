@@ -16,5 +16,3 @@ A clone of Advance Wars that runs entirely in the terminal with p2p networking f
 - Custom map support
 - Custom graphical support (extended graphics module?)
 - ???
-
-test

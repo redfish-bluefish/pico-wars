@@ -18,7 +18,7 @@ typedef struct game {
 
 
 game_t* game_new();
-int game_init(game_t* obj, game_board_t* board, WINDOW* game_win);
+int game_init(game_t* obj, int win_h, int win_w, int win_y, int win_x);
 
 
 #endif // GAME_H_

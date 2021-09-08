@@ -21,6 +21,7 @@
 
 /* Tile Color Codes */
 
+#define MAIN_WIN_COLOR 1
 #define CURSOR_SELECT_COLOR 2
 
 #define ROAD_TILE_COLOR 10

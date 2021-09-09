@@ -26,7 +26,7 @@ int game_init(game_t* obj, int win_h, int win_w, int win_y, int win_x)
 	tile_property_init(plains_tile, TER_PLAIN, 0, '.', PLAIN_TILE_COLOR);
 
 	tilemap_t* tilemap = tilemap_new();
-	tilemap_init(tilemap, 3, 2);
+	tilemap_init(tilemap, 20, 10);
 
 	game_board_t* game_board = game_board_new();
 	game_board_init(game_board, tilemap, 0, 0, 0, 0, game_win, MAIN_WIN_COLOR);

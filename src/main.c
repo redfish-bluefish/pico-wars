@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "board.h"
 #include "defines.h"
@@ -12,7 +13,7 @@
 #define MIN_WIDTH 80
 
 void draw(game_t* game);
-void update(game_t* game);
+void update(game_t* game, int input_char);
 
 
 int main()
@@ -53,11 +54,14 @@ int main()
 	game_t* game = game_new();
 	game_init(game, height, width, start_y, start_x);
 
+	int c;
+	c = ' ';
+
 	do
 	{
-		update(game);
+		update(game, c);
 		draw(game);
-	} while (getch() != 'c'); // ALT or ESC
+	} while ((c = getch()) != 'c'); // ALT or ESC
 
 	endwin();
 
@@ -67,17 +71,26 @@ int main()
 
 void draw(game_t* game)
 {
-	// Clear screen of characters to redraw
-	werase(game->game_win);
-
 	box(game->game_win, 0, 0);
-	wrefresh(game->game_win);			
+	wnoutrefresh(game->game_win);
 
 	draw_board(game);
+
+	doupdate();
 }
 
 
-void update(game_t* game)
+void update(game_t* game, int input_char)
 {
-	// Move board camera
+	game_board_t* board = game->board;
+	vec_2d_t max_dim;
+	int max_y, max_x;
+
+	getmaxyx(board->board_win, max_y, max_x);
+
+	max_dim.x = board->tilemap->width;
+	max_dim.y = board->tilemap->height;
+
+	move_selected_tile(&board->selected_tile, max_dim, input_char);
+	check_move_camera(&board->tilemap_camera, &board->selected_tile, max_y, max_x);
 }

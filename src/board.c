@@ -39,3 +39,79 @@ int game_board_init(game_board_t* obj, tilemap_t* tilemap,
 
     return RET_SUCCESS;
 }
+
+
+void move_selected_tile(vec_2d_t* selected_tile, vec_2d_t max_dim, int input_char)
+{
+    // Selected tile is only moved if new tile is within bounds
+    // Otherwise nothing happens
+    switch(input_char)
+    {
+        case KEY_LEFT:
+            if(selected_tile->x > 0)
+            {
+                selected_tile->x -= 1;
+            }
+            break;
+
+        case KEY_RIGHT:
+            if(selected_tile->x < max_dim.x - 1)
+            {
+                selected_tile->x += 1;
+            }
+            break;
+
+        case KEY_UP:
+            if(selected_tile->y > 0)
+            {
+                selected_tile->y -= 1;
+            }
+            break;
+
+        case KEY_DOWN:
+            if(selected_tile->y < max_dim.y - 1)
+            {
+                selected_tile->y += 1;
+            }
+            break;
+
+        default:
+            // Do nothing
+            break;
+    }
+}
+
+
+void check_move_camera(vec_2d_t* camera, vec_2d_t* selected_tile, int max_y, int max_x)
+{
+    vec_2d_t tile_delta;
+
+    tile_delta.x = camera->x - selected_tile->x;
+    tile_delta.y = camera->y - selected_tile->y;
+
+    // Relies on the fact that the camera tile is always centered in the game window
+    // Camera too far left (tile delta negative)
+    while((tile_delta.x * TILE_WIDTH) < -(max_x / 2))
+    {
+        tile_delta.x += 1;
+        camera->x += 1;
+    }
+    // Camera too far right (tile delta positive)
+    while((tile_delta.x * TILE_WIDTH) > (max_x / 2))
+    {
+        tile_delta.x -= 1;
+        camera->x -= 1;
+    }
+    // Camera too far up (tile delta negative)
+    while((tile_delta.y * TILE_HEIGHT) < -(max_y / 2))
+    {
+        tile_delta.y += 1;
+        camera->y += 1;
+    }
+    // Camera too far down (tile delta positive)
+    while((tile_delta.y * TILE_HEIGHT) > (max_y / 2))
+    {
+        tile_delta.y -= 1;
+        camera->y -= 1;
+    }
+}

@@ -107,5 +107,5 @@ void draw_board(game_t* game)
     wattroff(win, COLOR_PAIR(CURSOR_SELECT_COLOR));
 
 
-    wrefresh(win);
+    wnoutrefresh(win);
 }

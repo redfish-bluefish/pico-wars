@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #include <curses.h>
+#include <stdbool.h>
 
 #include "board.h"
 
@@ -14,6 +15,7 @@
 typedef struct game {
     game_board_t* board;
     WINDOW* game_win;
+    bool resize;
 } game_t;
 
 

@@ -14,6 +14,7 @@ int game_init(game_t* obj, int win_h, int win_w, int win_y, int win_x)
         return RET_BAD_ARG;
     }
 
+	obj->resize = false;
 	WINDOW* game_win = newwin(win_h, win_w, win_y, win_x);
 
   	init_pair(MAIN_WIN_COLOR, COLOR_WHITE, COLOR_BLACK);

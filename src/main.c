@@ -1,4 +1,6 @@
 #include <ncurses.h>
+#include <signal.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -14,7 +16,6 @@
 
 void draw(game_t* game);
 void update(game_t* game, int input_char);
-
 
 int main()
 {	
@@ -73,6 +74,30 @@ int main()
 
 void draw(game_t* game)
 {
+	// Resize first if necessary
+	if(game->resize)
+	{	
+
+		// Resizing math
+		wresize(game->game_win, MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT)), MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ)));
+		mvwin(game->game_win, (LINES - MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT))) / 2, (COLS - MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ))) / 2);
+
+		int game_win_width, game_win_height;
+
+    	getmaxyx(game->game_win, game_win_height, game_win_width);
+
+		wresize(game->board->board_win, game_win_height - MARGIN_BOTTOM - MARGIN_TOP - 2, (game_win_width - 2));
+		mvwin(game->board->board_win, ((LINES - game_win_height) / 2) + MARGIN_TOP + 1, ((COLS - game_win_width) / 2) + 1);
+		
+		// Clear screen
+		clear();
+		wclear(game->game_win);
+		wclear(game->board->board_win);
+		refresh();
+
+		game->resize = false;
+	}
+
 	box(game->game_win, 0, 0);
 	wnoutrefresh(game->game_win);
 
@@ -95,4 +120,10 @@ void update(game_t* game, int input_char)
 
 	move_selected_tile(&board->selected_tile, max_dim, input_char);
 	check_move_camera(&board->tilemap_camera, &board->selected_tile, max_y, max_x);
+
+	if(input_char == KEY_RESIZE)
+	{
+		game->resize = true;
+	}
+
 }

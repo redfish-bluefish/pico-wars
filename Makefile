@@ -1,6 +1,6 @@
 IDIR=include
 CC=gcc
-CFLAGS=-g -I$(IDIR) -O3 -mcx16 -Wall
+CFLAGS=-g -I$(IDIR) -O3 -Wall
 #CFLAGS_DEBUG=-ggdb $(CFLAGS)
 
 PNAME=pico-wars

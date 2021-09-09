@@ -16,8 +16,13 @@
 #define TILE_WIDTH 5
 #define TILE_HEIGHT 3
 
+#define WINDOW_PADDING_HORZ 3
+#define WINDOW_PADDING_VERT 3
+
 #define MARGIN_TOP 3
 #define MARGIN_BOTTOM 3
+#define MARGIN_RIGHT 1
+#define MARGIN_LEFT 1
 
 /* Tile Color Codes */
 

@@ -91,25 +91,25 @@ void check_move_camera(vec_2d_t* camera, vec_2d_t* selected_tile, int max_y, int
 
     // Relies on the fact that the camera tile is always centered in the game window
     // Camera too far left (tile delta negative)
-    while((tile_delta.x * TILE_WIDTH) < -(max_x / 2))
+    while((tile_delta.x * TILE_WIDTH) - (TILE_WIDTH / 2) < -(max_x / 2))
     {
         tile_delta.x += 1;
         camera->x += 1;
     }
     // Camera too far right (tile delta positive)
-    while((tile_delta.x * TILE_WIDTH) > (max_x / 2))
+    while((tile_delta.x * TILE_WIDTH) + (TILE_WIDTH / 2) > (max_x / 2))
     {
         tile_delta.x -= 1;
         camera->x -= 1;
     }
     // Camera too far up (tile delta negative)
-    while((tile_delta.y * TILE_HEIGHT) < -(max_y / 2))
+    while((tile_delta.y * TILE_HEIGHT) - (TILE_HEIGHT / 2) < -(max_y / 2))
     {
         tile_delta.y += 1;
         camera->y += 1;
     }
     // Camera too far down (tile delta positive)
-    while((tile_delta.y * TILE_HEIGHT) > (max_y / 2))
+    while((tile_delta.y * TILE_HEIGHT) + (TILE_HEIGHT / 2) > (max_y / 2))
     {
         tile_delta.y -= 1;
         camera->y -= 1;

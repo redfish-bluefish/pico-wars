@@ -43,8 +43,10 @@ int main()
 	int height, width;
 	int start_x, start_y;
 
-	height = MIN_HEIGHT;
-	width = MIN_WIDTH;
+	// Game window tries to have at least 3 characters of padding in each margin
+
+	height = MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT));
+	width = MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ));
 
 	start_y = (LINES - height) / 2;
 	start_x = (COLS - width) / 2;

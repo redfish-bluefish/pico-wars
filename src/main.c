@@ -14,6 +14,7 @@
 #define MIN_HEIGHT 25
 #define MIN_WIDTH 80
 
+void resize_clear(game_t* game);
 void draw(game_t* game);
 void update(game_t* game, int input_char);
 
@@ -38,25 +39,13 @@ int main()
 	noecho();
 	raw();
 	keypad(stdscr, TRUE);
-
-	// Create game window
-
-	int height, width;
-	int start_x, start_y;
-
-	// Game window tries to have at least 3 characters of padding in each margin
-
-	height = MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT));
-	width = MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ));
-
-	start_y = (LINES - height) / 2;
-	start_x = (COLS - width) / 2;
-
-	refresh();
+	curs_set(0);
 
 	game_t* game = game_new();
-	game_init(game, height, width, start_y, start_x);
+	game_init(game);
+	resize_clear(game);
 
+	// Primary loop
 	int c;
 	c = ' ';
 
@@ -72,29 +61,37 @@ int main()
 }
 
 
+void resize_clear(game_t* game)
+{
+	// Game window
+	RESIZE_WIN(game->game_win, GAME_WIN_H, GAME_WIN_W, GAME_WIN_Y, GAME_WIN_X);
+
+	// Board window
+	int game_win_width, game_win_height;
+
+	// must do this step AFTER resizing game window as board_win relies on game win dims
+	getmaxyx(game->game_win, game_win_height, game_win_width);
+
+	RESIZE_WIN(game->board->board_win, BOARD_WIN_H(game_win_height), 
+			   BOARD_WIN_W(game_win_width), BOARD_WIN_Y(game_win_height), 
+			   BOARD_WIN_X(game_win_width));
+	
+
+	// Clear screen to refresh everything
+	clear();
+	wclear(game->game_win);
+	wclear(game->board->board_win);
+	refresh();
+
+}
+
+
 void draw(game_t* game)
 {
 	// Resize first if necessary
 	if(game->resize)
 	{	
-
-		// Resizing math
-		wresize(game->game_win, MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT)), MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ)));
-		mvwin(game->game_win, (LINES - MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT))) / 2, (COLS - MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ))) / 2);
-
-		int game_win_width, game_win_height;
-
-    	getmaxyx(game->game_win, game_win_height, game_win_width);
-
-		wresize(game->board->board_win, game_win_height - MARGIN_BOTTOM - MARGIN_TOP - 2, (game_win_width - 2));
-		mvwin(game->board->board_win, ((LINES - game_win_height) / 2) + MARGIN_TOP + 1, ((COLS - game_win_width) / 2) + 1);
-		
-		// Clear screen
-		clear();
-		wclear(game->game_win);
-		wclear(game->board->board_win);
-		refresh();
-
+		resize_clear(game);
 		game->resize = false;
 	}
 

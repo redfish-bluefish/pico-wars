@@ -7,7 +7,7 @@ game_t* game_new()
 }
 
 
-int game_init(game_t* obj, int win_h, int win_w, int win_y, int win_x)
+int game_init(game_t* obj)
 {
     if(obj == NULL)
     {
@@ -15,10 +15,12 @@ int game_init(game_t* obj, int win_h, int win_w, int win_y, int win_x)
     }
 
 	obj->resize = false;
-	WINDOW* game_win = newwin(win_h, win_w, win_y, win_x);
+	WINDOW* game_win = newwin(0, 0, 0, 0);
 
   	init_pair(MAIN_WIN_COLOR, COLOR_WHITE, COLOR_BLACK);
 	init_pair(CURSOR_SELECT_COLOR, COLOR_YELLOW, COLOR_BLUE);
+
+	// Tile colors
 	init_pair(PLAIN_TILE_COLOR, COLOR_WHITE, COLOR_GREEN);
 
 	// initialize game and board

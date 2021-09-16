@@ -24,6 +24,24 @@
 #define MARGIN_RIGHT 1
 #define MARGIN_LEFT 1
 
+// I apologize for this monstrosity
+
+#define RESIZE_WIN(win, h, w, y, x) do{ wresize((win), (h), (w)); mvwin((win), (y), (x)); } while(0)
+
+#define GAME_WIN_H (MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT)))
+#define GAME_WIN_W (MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ)))
+#define GAME_WIN_Y ((LINES - MAX(MIN_HEIGHT, LINES - (2 * WINDOW_PADDING_VERT))) / 2)
+#define GAME_WIN_X ((COLS - MAX(MIN_WIDTH, COLS - (2 * WINDOW_PADDING_HORZ))) / 2)
+
+// Game board is buffered by top and bottom margins PLUS
+// Additional extra +1 to margins for external border
+// Fits within game win width-wise
+
+#define BOARD_WIN_H(gw_h) (gw_h - MARGIN_BOTTOM - MARGIN_TOP - 2)
+#define BOARD_WIN_W(gw_w) (gw_w - 2)
+#define BOARD_WIN_Y(gw_h) (((LINES - gw_h) / 2) + MARGIN_TOP + 1)
+#define BOARD_WIN_X(gw_w) (((COLS - gw_w) / 2) + 1)
+
 /* Tile Color Codes */
 
 #define MAIN_WIN_COLOR 1

@@ -2,8 +2,8 @@
 A clone of Advance Wars that runs entirely in the terminal with p2p networking for multiplayer. Made with C and ncurses.
 
 ## Roadmap
-- Board rendering and camera selection/movement
-- Support for resizing the terminal mid-game
+- ~~Board rendering and camera selection/movement~~
+- ~~Support for resizing the terminal mid-game~~
 - Unit rendering and selection/movement
 - Unit attacking and capturing logic
 - Game day turn logic and player state

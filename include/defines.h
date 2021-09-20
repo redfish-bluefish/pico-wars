@@ -37,10 +37,10 @@
 // Additional extra +1 to margins for external border
 // Fits within game win width-wise
 
-#define BOARD_WIN_H(gw_h) (gw_h - MARGIN_BOTTOM - MARGIN_TOP - 2)
-#define BOARD_WIN_W(gw_w) (gw_w - 2)
-#define BOARD_WIN_Y(gw_h) (((LINES - gw_h) / 2) + MARGIN_TOP + 1)
-#define BOARD_WIN_X(gw_w) (((COLS - gw_w) / 2) + 1)
+#define BOARD_WIN_H(gw_h) ((gw_h) - MARGIN_BOTTOM - MARGIN_TOP - 2)
+#define BOARD_WIN_W(gw_w) ((gw_w) - 2)
+#define BOARD_WIN_Y(gw_h) (((LINES - (gw_h)) / 2) + MARGIN_TOP + 1)
+#define BOARD_WIN_X(gw_w) (((COLS - (gw_w)) / 2) + 1)
 
 /* Tile Color Codes */
 

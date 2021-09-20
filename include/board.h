@@ -15,15 +15,37 @@ typedef struct vec_2d {
 } vec_2d_t;
 
 
+typedef enum board_state {
+    SB_MAIN_TILEMAP,
+    SB_MINI_TILEMAP,
+    SB_SELECT_MENU,
+    SB_INFO_POPUP,
+    SB_ERR_POPUP
+} boardState;
+
+
+typedef enum acycle_tilemap {
+    A_BASE = 1,
+    A_PATH = 2,
+    A_HEALTH = 3,
+    A_AMMO = 4,
+    A_SUPPLY = 5
+} aCycleTilemap;
+
+
 /* game_board_t - A struct holding the playable game state and associated data 
  *
  * tilemap - The grid of tiles the game is occuring on
+ * movement_map - Grid that maps to tilemap of available spaces for selected unit to move
+ * attack_map - Grid that maps to tilemap of available spaces for selected unit to attack
  * tilemap_camera - 2D vector of which tile the render should center on
  * selected_tile - 2D vector of which tile is currently selected by the player
  * board_win - The window the game board should be drawn to 
  */
 typedef struct game_board {
     tilemap_t* tilemap;
+    int* movement_map;
+    int* attack_map;
     vec_2d_t tilemap_camera;
     vec_2d_t selected_tile;
     WINDOW* board_win;

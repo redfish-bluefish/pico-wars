@@ -6,6 +6,12 @@
 
 #include "board.h"
 
+typedef enum game_state {
+    S_MAIN_MENU,
+    S_IN_GAME,
+} gameState;
+
+
 /* game_t - A struct holding shared global context objects for the program 
  *
  * board - Container objects representing playable game state

@@ -15,7 +15,15 @@ int game_board_init(game_board_t* obj, tilemap_t* tilemap,
                     int selected_tile_x, int selected_tile_y,
                     WINDOW* game_win, int game_win_color)
 {
-    if(obj == NULL)
+    if(obj == NULL || tilemap == NULL)
+    {
+        return RET_BAD_ARG;
+    }
+    
+    obj->movement_map = calloc(tilemap->height * tilemap->width, sizeof(int));
+    obj->attack_map = calloc(tilemap->height * tilemap->width, sizeof(int));
+
+    if(obj->movement_map == NULL || obj->attack_map == NULL)
     {
         return RET_BAD_ARG;
     }
@@ -25,6 +33,7 @@ int game_board_init(game_board_t* obj, tilemap_t* tilemap,
     obj->tilemap_camera.y = tilemap_camera_y;
     obj->selected_tile.x = selected_tile_x;
     obj->selected_tile.y = selected_tile_y;
+
 
     obj->board_win = newwin(0, 0, 0, 0);
 

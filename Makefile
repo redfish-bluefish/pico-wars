@@ -1,6 +1,6 @@
 IDIR=include
 CC=gcc
-CFLAGS=-g -I$(IDIR) -O3 -Wall
+CFLAGS=-g -I$(IDIR) -O3 -Wall -std=gnu99
 #CFLAGS_DEBUG=-ggdb $(CFLAGS)
 
 PNAME=pico-wars
@@ -8,7 +8,7 @@ PNAME=pico-wars
 ODIR=obj
 LDIR=lib
 
-LIBS=-lm -lcriterion -lncurses
+LIBS=-lm -lcriterion -lncurses -lrt
 
 _DEPS = uthash.h utlist.h comm.h draw.h game.h tilemap.h board.h units.h defines.h units.h 
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))

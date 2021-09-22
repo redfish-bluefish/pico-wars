@@ -10,10 +10,10 @@ LDIR=lib
 
 LIBS=-lm -lcriterion -lncurses -lrt
 
-_DEPS = uthash.h utlist.h comm.h draw.h game.h tilemap.h board.h units.h defines.h units.h 
+_DEPS = log.h uthash.h utlist.h comm.h draw.h game.h tilemap.h board.h units.h defines.h units.h 
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = tilemap.o draw.o game.o board.o
+_OBJ = log.o tilemap.o draw.o game.o board.o
 
 _MAIN_OBJ = $(_OBJ) main.o
 MAIN_OBJ = $(patsubst %,$(ODIR)/%,$(_MAIN_OBJ))

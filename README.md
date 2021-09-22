@@ -16,3 +16,8 @@ A clone of Advance Wars that runs entirely in the terminal with p2p networking f
 - Custom map support
 - Custom graphical support (extended graphics module?)
 - ???
+
+## Third-Party Dependencies
+
+- log.c by rxi (https://github.com/rxi/log.c)
+- uthash/utlist by Troy D. Hanson (https://github.com/troydhanson/uthash)

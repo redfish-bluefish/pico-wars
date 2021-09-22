@@ -11,6 +11,7 @@
 #include "defines.h"
 #include "draw.h"
 #include "game.h"
+#include "log.h"
 
 #define MIN_HEIGHT 25
 #define MIN_WIDTH 80
@@ -18,12 +19,13 @@
 void resize_clear(game_t* game);
 void draw(game_t* game);
 void update(game_t* game, int input_char);
+char* err_to_str(int err);
 
 int handle_popup(game_t* game);
 
-typedef int popup_handler(game_t* game);
+typedef int (*popup_handler)(game_t* game);
 
-static *popup_handler[1];
+static popup_handler p_handlers[1];
 
 int main()
 {	
@@ -43,13 +45,33 @@ int main()
 		exit(1);
 	}
 
+
+	FILE* log_file = fopen("log.txt", "w");
+	if(log_file == NULL)
+	{
+		fprintf(stderr, "Failed to create/open log file, quitting...");
+		exit(1);
+	}
+
+	int rt;
+
+	log_set_quiet(true);
+	log_set_level(LOG_TRACE);
+	log_add_fp(log_file, LOG_TRACE);
+	log_debug("test log!");
+
 	noecho();
 	raw();
 	keypad(stdscr, TRUE);
 	curs_set(0);
 
 	game_t* game = game_new();
-	game_init(game);
+	if((rt = game_init(game)) != RET_SUCCESS)
+	{
+		log_fatal(err_to_str(rt));
+		endwin();
+		exit(1);
+	}
 	resize_clear(game);
 
 	// Primary loop
@@ -62,6 +84,7 @@ int main()
 		draw(game);
 	} while ((c = getch()) != 'c'); // ALT or ESC
 
+	fclose(log_file);
 	endwin();
 
 	return 0;
@@ -95,6 +118,8 @@ void resize_clear(game_t* game)
 
 void draw(game_t* game)
 {
+	log_trace("In draw loop");
+
 	// Resize first if necessary
 	if(game->resize)
 	{	
@@ -113,6 +138,8 @@ void draw(game_t* game)
 
 void update(game_t* game, int input_char)
 {
+	log_trace("In update loop");
+
 	game_board_t* board = game->board;
 	vec_2d_t max_dim;
 	int max_y, max_x;
@@ -130,4 +157,20 @@ void update(game_t* game, int input_char)
 		game->resize = true;
 	}
 
+}
+
+
+char* err_to_str(int err)
+{
+	switch(err)
+	{
+		case(RET_BAD_ARG):
+			return "ERROR: Recieved a bad argument";
+		case(RET_ADD_CONFLICT):
+			return "ERROR: Conflict when adding to structure";
+		case(RET_ALLOC_FAIL):
+			return "ERROR: Memory allocation failed";
+		default:
+			return "Unknown error";
+	}
 }

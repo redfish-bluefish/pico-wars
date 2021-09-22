@@ -34,17 +34,30 @@ typedef enum acycle_tilemap {
 
 
 typedef enum board_event_type {
-    EVENT_MOVE,
-    EVENT_ATTACK,
-    EVENT_LOAD,
-    EVENT_UNLOAD,
-    EVENT_BUILD,
-    EVENT_RESUPPLY
+    EVENT_MOVE = 0,
+    EVENT_ATTACK = 1,
+    EVENT_LOAD = 2,
+    EVENT_UNLOAD = 3,
+    EVENT_BUILD = 4,
+    EVENT_CAPTURE = 5,
+    EVENT_RESUPPLY = 6
 } boardEventType;
 
 
+/* board_event_t - A struct representing something happening to the board state during a player's turn
+ *   Will be converted to serializable format and sent over network to transmit game moves
+ *   Ordered by chronology in the turn
+ * 
+ * type - The type of event that has occured
+ * src - Coordinates to the source tile (and/or contained unit) in tilemap
+ * dst - Coordinates to the destination tile (and/or contained unit) in tilemap
+ * next - Next board event occuring during turn 
+ */
 typedef struct board_event {
-
+    boardEventType type;
+    vec_2d_t src;
+    vec_2d_t dst;
+    struct board_event* next;
 } board_event_t;
 
 

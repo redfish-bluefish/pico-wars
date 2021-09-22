@@ -133,11 +133,6 @@ int tilemap_add_tile(tilemap_t* tilemap, tile_properties_t* properties, int owne
         return RET_BAD_ARG;
     }
 
-    if(tilemap_get_tile(tilemap, x, y) != NULL)
-    {
-        return RET_ADD_CONFLICT;
-    }
-
     tile_t* tile = ARR_2D_LOOKUP(tilemap->tiles, tilemap->width, x, y);
     return tile_init(tile, properties, owner, capture_progress, unit);
 }

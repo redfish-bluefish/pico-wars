@@ -19,6 +19,12 @@ void resize_clear(game_t* game);
 void draw(game_t* game);
 void update(game_t* game, int input_char);
 
+int handle_popup(game_t* game);
+
+typedef int popup_handler(game_t* game);
+
+static *popup_handler[1];
+
 int main()
 {	
 	// ncurses window and color setup

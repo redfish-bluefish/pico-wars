@@ -33,6 +33,21 @@ typedef enum acycle_tilemap {
 } aCycleTilemap;
 
 
+typedef enum board_event_type {
+    EVENT_MOVE,
+    EVENT_ATTACK,
+    EVENT_LOAD,
+    EVENT_UNLOAD,
+    EVENT_BUILD,
+    EVENT_RESUPPLY
+} boardEventType;
+
+
+typedef struct board_event {
+
+} board_event_t;
+
+
 /* game_board_t - A struct holding the playable game state and associated data 
  *
  * tilemap - The grid of tiles the game is occuring on

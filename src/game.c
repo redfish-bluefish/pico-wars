@@ -42,7 +42,7 @@ int game_init(game_t* obj)
 	{
 		for(int j = 0; j < tilemap->height; j++)
 		{
-			tile_init(ARR_2D_LOOKUP(tilemap->tiles, tilemap->width, i, j), plains_tile, 0, 0, NULL);
+			tilemap_add_tile(tilemap, plains_tile, 0, 0, NULL, i, j);
 		}
 	}
 

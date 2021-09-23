@@ -1,5 +1,6 @@
 #include "defines.h"
 #include "game.h"
+#include "log.h"
 
 game_t* game_new()
 {
@@ -13,6 +14,8 @@ int game_init(game_t* obj)
     {
         return RET_BAD_ARG;
     }
+
+	int rt;
 
 	obj->resize = false;
 	WINDOW* game_win = newwin(0, 0, 0, 0);
@@ -42,7 +45,11 @@ int game_init(game_t* obj)
 	{
 		for(int j = 0; j < tilemap->height; j++)
 		{
-			tile_init(ARR_2D_LOOKUP(tilemap->tiles, tilemap->width, i, j), plains_tile, 0, 0, NULL);
+			if((rt = tilemap_add_tile(tilemap, plains_tile, 0, 0, NULL, i, j)) != RET_SUCCESS)
+			{
+				log_fatal("Failed to add tile to (%d, %d)", i, j);
+				return rt;
+			}
 		}
 	}
 

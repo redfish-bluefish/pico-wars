@@ -3,6 +3,7 @@
 
 #include <curses.h>
 #include <stdbool.h>
+#include <stdio.h>
 
 #include "board.h"
 

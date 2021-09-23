@@ -4,6 +4,7 @@
 #include "defines.h"
 #include "draw.h"
 #include "game.h"
+#include "log.h"
 
 void get_offset(WINDOW* d_win, vec_2d_t* camera, vec_2d_t* tile_pos, int* y, int* x)
 {
@@ -83,6 +84,7 @@ void draw_board(game_t* game)
     {
         for(int j = 0; j < tilemap->height; j++)
         {
+            log_trace("Drawing board tile at (%d, %d)", i, j);
             vec_2d_t tile_pos;
             tile_pos.x = i;
             tile_pos.y = j;
